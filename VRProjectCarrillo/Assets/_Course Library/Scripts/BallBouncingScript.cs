@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class BallBouncingScript : MonoBehaviour
 {
-    public AudioClip ballimpact;
-    AudioSource audioSource;
     private Rigidbody rb;
-    float ballmagnitude;
+    private AudioSource audioSource;
+
+    [SerializeField] private AudioClip bounceSound;
+    private float volumeSound;
 
     void Start()
     {
@@ -15,16 +16,13 @@ public class BallBouncingScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
+
     void OnCollisionEnter(Collision collision)
     {
-        ballmagnitude = rb.velocity.magnitude / 2;
-        Debug.Log(ballmagnitude);
-        if (ballmagnitude > 1)
-        {
-            ballmagnitude = 1;
-        }
-        audioSource.PlayOneShot(ballimpact, ballmagnitude);
-    }
+       
+        volumeSound = rb.velocity.magnitude;
+        Debug.Log(volumeSound); 
 
+        audioSource.PlayOneShot(bounceSound, volumeSound);
+    }
 }
